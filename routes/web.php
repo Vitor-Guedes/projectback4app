@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +15,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('layout');
 });
+
+Route::get('/admin', [Controller::class, 'admin'])->name('web.admin');
+Route::post('/profile', [Controller::class, 'store'])->name('web.profile.store');
+Route::post('/profile/update', [Controller::class, 'update'])->name('web.profile.update');

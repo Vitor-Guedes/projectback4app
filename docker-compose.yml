@@ -1,0 +1,33 @@
+networks:
+    back4app:
+        driver: 'bridge'
+        ipam:
+            config:
+                - subnet: 172.33.122.0/24
+
+services:
+
+    php-apache:
+        build: ./
+        ports:
+            - 80:80
+        volumes:
+            - ./:/var/www/html
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
+        networks:
+            - back4app
+
+    mongodb:
+        image: mongo
+        ports:
+            - "27017:27017"
+        volumes:
+            - ./portdatabase:/data/db
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: root
+        networks:
+            - back4app
+volumes:
+    portdatabase:

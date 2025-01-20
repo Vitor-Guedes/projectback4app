@@ -3,10 +3,7 @@ FROM php:8.1-apache
 # Install necessary libraries
 RUN apt-get update && apt-get install -y \
     libonig-dev \
-    libzip-dev \ 
-    libssl-dev \
-    libmongoc-dev \
-    && pecl install mongodb && docker-php-ext-enable mongodb
+    libzip-dev
 
 # Install PHP extensions
 RUN docker-php-ext-install \
@@ -39,7 +36,8 @@ RUN php artisan key:generate
 # COPY xdebug.ini "${PHP_INI_DIR}/conf.d"
 
 # Expose port 80 and 9000
-EXPOSE 80 9000
+EXPOSE 80
+# EXPOSE 80 9000
 
 # Adjusting Apache configurations
 RUN a2enmod rewrite

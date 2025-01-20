@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Contracts\ProfileServiceInterface;
 use App\Services\MongoProfileService;
 use App\Services\ParseProfileService;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Parse\ParseClient;
 
@@ -23,6 +24,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        if(config('app.env') === 'production') {
+            URL::forceScheme('https');
+        }
+
         //
         $this->app->bind(ProfileServiceInterface::class, function () {
             if (config('app.env') === 'local') {

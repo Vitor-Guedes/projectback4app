@@ -23,7 +23,7 @@ WORKDIR /var/www/html
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Install dependencies
-RUN composer install
+RUN composer install --ignore-platform-req=ext-mongodb
 
 # Change ownership of our applications
 RUN chown -R www-data:www-data /var/www/html
